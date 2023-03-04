@@ -37,8 +37,13 @@ contract Evoting {
 
     mapping(address => bool) public userExist;
 
+    mapping(uint256 => address) public allAddress;
+
     mapping(address => User) public allUser;
-    mapping(uint256 => Token) public allToken;
+
+    // mapping(uint256 => Token) public allToken;
+
+    Token[] allToken;
 
     function createPoll(
         string memory _title,
@@ -102,8 +107,12 @@ contract Evoting {
         for (uint256 i = 0; i <= _tokenCount; i++) {
             tokenCounter++;
             Token memory token = Token(tokenCounter, msg.sender, _time);
-            allToken[tokenCounter] = token;
+            allToken.push(token);
         }
+    }
+
+    function getAllTransactions() public view returns (Token[] memory) {
+        return allToken;
     }
 
     function addUser(
@@ -118,8 +127,12 @@ contract Evoting {
 
         User memory user = User(msg.sender, _name, _phone, _timestamp, 10);
 
+        createToken(10, _timestamp);
+
         allUser[msg.sender] = user;
 
         userExist[msg.sender] = true;
+
+        allAddress[usersCounter] = msg.sender;
     }
 }

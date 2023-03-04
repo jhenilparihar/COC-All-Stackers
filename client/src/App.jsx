@@ -25,6 +25,7 @@ class App extends Component {
       contractDetected: false,
       Contract: null,
       verified: false,
+      allUserProfile: {},
     };
   }
 
@@ -58,6 +59,7 @@ class App extends Component {
       accountBalance = web3.utils.fromWei(accountBalance, "Ether");
       this.setState({ accountBalance });
       const Contract = new web3.eth.Contract(contractABI, contractAddress);
+      console.log(Contract)
       if (Contract != null) {
         this.setState({ Contract });
         this.setState({ contractDetected: true });
@@ -69,6 +71,19 @@ class App extends Component {
 
         if (isProfileVerified) {
           this.setState({ verified: true });
+          const ProfileCounter = await Contract.methods.usersCounter().call();
+          for (
+            var profile_counter = 1;
+            profile_counter <= ProfileCounter;
+            profile_counter++
+          ) {
+            const address = await Contract.methods
+              .allAddress(profile_counter)
+              .call();
+            const profile = await Contract.methods.allProfiles(address).call();
+
+            this.state.allUserProfile[address] = profile;
+          }
         }
       } else {
         this.setState({ contractDetected: false });
@@ -81,24 +96,6 @@ class App extends Component {
     await window.ethereum.enable();
     this.setState({ metamaskConnected: true });
     window.location.reload();
-  };
-
-  addToBlockchain = async (tokenPrice, message, keyword) => {
-    this.setState({ loading: true });
-    const price = window.web3.utils.toWei(tokenPrice.toString(), "ether");
-    const transactionHash = await this.state.Contract.methods
-      .addToBlockchain(this.state.accountAddress, price, message, keyword)
-      .send({ from: this.state.accountAddress })
-      .on("confirmation", () => {
-        localStorage.setItem(this.state.accountAddress, new Date().getTime());
-        this.setState({ loading: false });
-        window.location.reload();
-      });
-  };
-
-  getTransaction = async () => {
-    const tran = await this.state.Contract.methods.getAllTransactions().call();
-    console.log(tran);
   };
 
   getDate = () => {
@@ -120,8 +117,23 @@ class App extends Component {
     var month = months[currentTime.getMonth()];
     var day = currentTime.getDate();
     var year = currentTime.getFullYear();
+
+    let date2 = new Date(d2).getTime();
     const overAllDate = month + " " + day + " " + year;
     return overAllDate;
+  };
+
+  registerUser = async (name, phone) => {
+    this.setState({ loading: true });
+    const d = new Date();
+    let time = d.getTime();
+    this.state.Contract.methods
+      .addUser(name, phone, time)
+      .send({ from: this.state.accountAddress })
+      .on("confirmation", () => {
+        this.setState({ loading: false });
+        window.location.reload();
+      });
   };
 
   render() {
@@ -136,7 +148,10 @@ class App extends Component {
           <Loading />
         ) : !this.state.verified ? (
           <>
-            <RegisterPage />
+            <RegisterPage
+              registerUser={this.registerUser}
+              loading={this.state.loading}
+            />
           </>
         ) : (
           <>

@@ -13,8 +13,8 @@ class Dashboard extends Component {
   render() {
     return (
       <>
-      <button>get Token</button>
       <button>Buy Token</button>
+      
       <button>Create Poll</button>
       </>
     );
