@@ -128,36 +128,27 @@ class App extends Component {
     console.log(this.state.contractDetected);
     return (
       <>
-      {!this.state.metamaskConnected ? (
-        <ConnectToMetamask connectToMetamask={this.connectToMetamask} />
-      ) : !this.state.contractDetected ? (
-        <ContractNotDeployed />
-      ) : this.state.loading ? (
-        <Loading />
-      ) : (
-        <>
-          <BrowserRouter>
-            <Routes>
-              <Route
-                path="/"
-                element={
-                  <Home />
-                }
-              >
-                
-                
-              </Route>
-              <Route
-                path="/dashboard"
-                element={
-                  <Dashboard />
-                }
-              ></Route>
-            </Routes>
-          </BrowserRouter>
-        </>
-      )}
-    </>
+        {!this.state.metamaskConnected ? (
+          <ConnectToMetamask connectToMetamask={this.connectToMetamask} />
+        ) : !this.state.contractDetected ? (
+          <ContractNotDeployed />
+        ) : this.state.loading ? (
+          <Loading />
+        ) : !this.state.verified ? (
+          <>
+            <RegisterPage />
+          </>
+        ) : (
+          <>
+            <BrowserRouter>
+              <Routes>
+                <Route path="/" element={<Home />}></Route>
+                <Route path="/dashboard" element={<Dashboard />}></Route>
+              </Routes>
+            </BrowserRouter>
+          </>
+        )}
+      </>
     );
   }
 }
