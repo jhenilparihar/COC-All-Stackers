@@ -1,4 +1,4 @@
-import { useState, Component } from "react";
+import { Component } from "react";
 import reactLogo from "./assets/react.svg";
 import "./App.css";
 import Web3 from "web3";
@@ -8,6 +8,7 @@ import { contractABI, contractAddress } from "./utils/constants";
 import ConnectToMetamask from "./components/ConnectMetamask/ConnectToMetamask";
 import ContractNotDeployed from "./components/ContractNotDeployed/ContractNotDeployed";
 import Loading from "./components/Loading/Loading";
+import RegisterPage from "./components/RegisterPage/RegisterPage";
 
 class App extends Component {
   constructor(props) {
@@ -20,6 +21,7 @@ class App extends Component {
       metamaskConnected: false,
       contractDetected: false,
       Contract: null,
+      verified: false,
     };
   }
 
@@ -53,9 +55,18 @@ class App extends Component {
       accountBalance = web3.utils.fromWei(accountBalance, "Ether");
       this.setState({ accountBalance });
       const Contract = new web3.eth.Contract(contractABI, contractAddress);
-      if (Contract) {
+      if (Contract != null) {
         this.setState({ Contract });
         this.setState({ contractDetected: true });
+
+        // console.log(this.state.Contract);
+        const isProfileVerified = await Contract.methods
+          .userExist(this.state.accountAddress)
+          .call();
+
+        if (isProfileVerified) {
+          this.setState({ verified: true });
+        }
       } else {
         this.setState({ contractDetected: false });
       }
@@ -81,12 +92,37 @@ class App extends Component {
         window.location.reload();
       });
   };
+
   getTransaction = async () => {
     const tran = await this.state.Contract.methods.getAllTransactions().call();
-    console.log(tran)
-  }
+    console.log(tran);
+  };
+
+  getDate = () => {
+    var months = [
+      "January",
+      "February",
+      "March",
+      "April",
+      "May",
+      "June",
+      "July",
+      "August",
+      "September",
+      "October",
+      "November",
+      "December",
+    ];
+    var currentTime = new Date();
+    var month = months[currentTime.getMonth()];
+    var day = currentTime.getDate();
+    var year = currentTime.getFullYear();
+    const overAllDate = month + " " + day + " " + year;
+    return overAllDate;
+  };
 
   render() {
+    console.log(this.state.contractDetected);
     return (
       <>
         {!this.state.metamaskConnected ? (
@@ -95,6 +131,10 @@ class App extends Component {
           <ContractNotDeployed />
         ) : this.state.loading ? (
           <Loading />
+        ) : !this.state.verified ? (
+          <>
+            <RegisterPage />
+          </>
         ) : (
           <div className="App">
             <div>
@@ -107,11 +147,7 @@ class App extends Component {
             </div>
             <h1>Vite + React</h1>
             <div className="card">
-              <button
-                onClick={this.getTransaction}
-              >
-                get data
-              </button>
+              <button onClick={this.getTransaction}>get data</button>
               <button
                 // onClick={() => this.setState({ count: this.state.count + 1 })}
                 // onClick={() => this.addToBlockchain(15, "Hackathon", "Test2")}
