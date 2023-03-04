@@ -20,7 +20,7 @@ module.exports = async ({ getNamedAccounts, deployments }) => {
   //   log: true,
   // });
 
-  await deploy("Ecertify", {
+  await deploy("Evoting", {
     from: deployer,
     log: true,
   });
