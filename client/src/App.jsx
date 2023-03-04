@@ -1,4 +1,5 @@
 import { Component } from "react";
+import { BrowserRouter, Route, Routes } from "react-router-dom";
 import reactLogo from "./assets/react.svg";
 import "./App.css";
 import Web3 from "web3";
@@ -9,6 +10,8 @@ import ConnectToMetamask from "./components/ConnectMetamask/ConnectToMetamask";
 import ContractNotDeployed from "./components/ContractNotDeployed/ContractNotDeployed";
 import Loading from "./components/Loading/Loading";
 import RegisterPage from "./components/RegisterPage/RegisterPage";
+import Dashboard from "./components/Dashboard/Dashboard";
+import Home from "./components/Home/Home";
 
 class App extends Component {
   constructor(props) {
@@ -125,46 +128,36 @@ class App extends Component {
     console.log(this.state.contractDetected);
     return (
       <>
-        {!this.state.metamaskConnected ? (
-          <ConnectToMetamask connectToMetamask={this.connectToMetamask} />
-        ) : !this.state.contractDetected ? (
-          <ContractNotDeployed />
-        ) : this.state.loading ? (
-          <Loading />
-        ) : !this.state.verified ? (
-          <>
-            <RegisterPage />
-          </>
-        ) : (
-          <div className="App">
-            <div>
-              <a href="https://vitejs.dev" target="_blank">
-                <img src="/vite.svg" className="logo" alt="Vite logo" />
-              </a>
-              <a href="https://reactjs.org" target="_blank">
-                <img src={reactLogo} className="logo react" alt="React logo" />
-              </a>
-            </div>
-            <h1>Vite + React</h1>
-            <div className="card">
-              <button onClick={this.getTransaction}>get data</button>
-              <button
-                // onClick={() => this.setState({ count: this.state.count + 1 })}
-                // onClick={() => this.addToBlockchain(15, "Hackathon", "Test2")}
-                onClick={this.getTransaction}
+      {!this.state.metamaskConnected ? (
+        <ConnectToMetamask connectToMetamask={this.connectToMetamask} />
+      ) : !this.state.contractDetected ? (
+        <ContractNotDeployed />
+      ) : this.state.loading ? (
+        <Loading />
+      ) : (
+        <>
+          <BrowserRouter>
+            <Routes>
+              <Route
+                path="/"
+                element={
+                  <Home />
+                }
               >
-                add data
-              </button>
-              <p>
-                Edit <code>src/App.jsx</code> and save to test HMR
-              </p>
-            </div>
-            <p className="read-the-docs">
-              Click on the Vite and React logos to learn more
-            </p>
-          </div>
-        )}
-      </>
+                
+                
+              </Route>
+              <Route
+                path="/dashboard"
+                element={
+                  <Dashboard />
+                }
+              ></Route>
+            </Routes>
+          </BrowserRouter>
+        </>
+      )}
+    </>
     );
   }
 }
