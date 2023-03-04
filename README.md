@@ -1,3 +1,0 @@
-# COC-All-Stackers
-
-Hi
