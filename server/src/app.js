@@ -46,7 +46,7 @@ app.post('/api/electionName', async function(req, res) {
         election_id: Math.floor(Math.random() * 100),
         election_name: req.body.election_name,
         election_organizer: req.body.election_organizer,
-        election_password: md5(req.body.election_password),
+        election_password: req.body.election_password,
     }).then(election => {
         res.json(election);
     });
