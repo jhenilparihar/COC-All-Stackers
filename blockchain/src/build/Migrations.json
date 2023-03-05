@@ -59,7 +59,7 @@
   "sourceMap": "36:326:1:-;;;196:52;8:9:-1;5:2;;;30:1;27;20:12;5:2;196:52:1;232:10;224:5;;:18;;;;;;;;;;;;;;;;;;36:326;;;;;;",
   "deployedSourceMap": "36:326:1:-;;;;8:9:-1;5:2;;;30:1;27;20:12;5:2;36:326:1;;;;;;;;;;;;;;;;;;;;;;;;;;;;;86:36;;;:::i;:::-;;;;;;;;;;;;;;;;;;;61:20;;;:::i;:::-;;;;;;;;;;;;;;;;;;;;;;;254:105;;;;;;13:2:-1;8:3;5:11;2:2;;;29:1;26;19:12;2:2;254:105:1;;;;;;;;;;;;;;;;;:::i;:::-;;86:36;;;;:::o;61:20::-;;;;;;;;;;;;;:::o;254:105::-;176:5;;;;;;;;;;;162:19;;:10;:19;;;158:26;;;344:9;317:24;:36;;;;158:26;254:105;:::o",
   "source": "pragma solidity >=0.4.21 <0.7.0;\r\n\r\ncontract Migrations {\r\n  address public owner;\r\n  uint public last_completed_migration;\r\n\r\n  modifier restricted() {\r\n    if (msg.sender == owner) _;\r\n  }\r\n\r\n  constructor() public {\r\n    owner = msg.sender;\r\n  }\r\n\r\n  function setCompleted(uint completed) public restricted {\r\n    last_completed_migration = completed;\r\n  }\r\n}\r\n",
-  "sourcePath": "C:\\Users\\Harsh\\Desktop\\E-Voting-App\\blockchain\\src\\contracts\\Migrations.sol",
+  "sourcePath": "C:\\Users\\Jhenil\\Development\\COC-All-Stackers\\blockchain\\src\\contracts\\Migrations.sol",
   "ast": {
     "absolutePath": "project:/src/contracts/Migrations.sol",
     "exportedSymbols": {
@@ -958,12 +958,12 @@
     "5777": {
       "events": {},
       "links": {},
-      "address": "0x8E0A87f6E94b3220ad8610ec1138d91B8C8c93A1",
-      "transactionHash": "0x2d7fe481a8ee7af01fa17939b381ca21fd0a3f653d066e4368ee247a0e677cf2"
+      "address": "0xB2aE66c847CC4908aC1d8F9edCD697e0e2A9D3b9",
+      "transactionHash": "0x343bd0ad6f3d4ed89b8c179afbca1a98dfbfb82e6a2105fc2ac1fb7bbe4f1c53"
     }
   },
-  "schemaVersion": "3.4.8",
-  "updatedAt": "2023-03-05T03:08:04.212Z",
+  "schemaVersion": "3.4.4",
+  "updatedAt": "2023-03-05T04:03:07.408Z",
   "networkType": "ethereum",
   "devdoc": {
     "methods": {}
