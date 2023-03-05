@@ -13,6 +13,9 @@ const electionName = mongoose.model('electionlists',{
     election_password: {
         type: String
     },
+    accountaddress: {
+        type: String
+    },
 });
 
 module.exports = electionName

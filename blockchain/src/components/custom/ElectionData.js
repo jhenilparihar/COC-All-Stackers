@@ -21,6 +21,7 @@ class ElectionData extends Component {
         axios.get('http://localhost:8000/api/electionName', {})
         .then(function(response){ 
             var data = response.data;
+            console.log(data);
             currentComponent.setState({
                 // election_name: data[0],
                 // election_organizer: data[1],
