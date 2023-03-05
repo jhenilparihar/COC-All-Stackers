@@ -19,7 +19,7 @@ class Navbar extends Component {
                 <nav className="nav-wrapper black darken-2">
                     <div className="container">
                         <a className="brand-logo">
-                            E-Election
+                            Go-Vote
                         </a>
                     </div>
                 </nav>
@@ -29,7 +29,7 @@ class Navbar extends Component {
                 <nav className="nav-wrapper black darken-2">
                     <div className="container">
                         <a className="brand-logo">
-                            E-Election
+                            Go-Vote
                         </a>
                         <ul className="right">
                             <li><NavLink to="/">Home</NavLink></li>
