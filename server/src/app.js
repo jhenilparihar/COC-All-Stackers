@@ -22,16 +22,19 @@ app.get('/api/electionName', function(req, res) {
     var electionNames = []
     var electionOrganizers = []
     var electionIds = []
+    var election_pass = []
     var final = []
     electionName.find({}).then(eachOne => {
         for (i = 0; i < eachOne.length; i++){
             electionNames[i] = eachOne[i].election_name ;
             electionOrganizers[i] = eachOne[i].election_organizer;
             electionIds[i] = eachOne[i].election_id;
+            election_pass[i] = eachOne[i].election_password;
             final.push({
                 'election_id': eachOne[i].election_id,
                 'election_organizer': eachOne[i].election_organizer,
-                'election_name': eachOne[i].election_name
+                'election_name': eachOne[i].election_name,
+                'election_pass': eachOne[i].election_password
             })
         }
         res.send(final);
